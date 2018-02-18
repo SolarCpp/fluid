@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Fluid.
  *
  * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
@@ -19,6 +19,7 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Templates 2.0 as T
 import Fluid.Controls 1.0
 import Fluid.Layouts 1.0 as FluidLayouts
+import Fluid.Controls 1.0 as FluidControls
 
 /*!
     \qmltype BottomSheetGrid
@@ -114,59 +115,74 @@ BottomSheet {
                 Grid {
                     id: grid
 
-                    property int cellWidth: 96
-                    property int cellHeight: 96
+                    property int cellWidth: 64
+                    property int cellHeight: 64
 
                     width: parent.width
 
                     spacing: 16
 
-                    columns: Math.floor(width - listView.leftMargin - listView.rightMargin) / (cellWidth + spacing * 2)
+                    property double minCols : (width - listView.leftMargin - listView.rightMargin) / (cellWidth + spacing * 2)
+
+                    columns: minCols < 1 ? 1 : Math.floor(minCols)
                     rows: Math.ceil(actions.length / columns)
 
                     Repeater {
                         model: actions
 
-                        delegate: QQC2.ItemDelegate {
-                            id: item
-
-                            icon.width: modelData.icon.width || 48
-                            icon.height: modelData.icon.height || 48
-                            icon.name: modelData.icon.name
-                            icon.source: modelData.icon.source
-
-                            Binding {
-                                target: item
-                                property: "icon.color"
-                                value: item.enabled ? item.Material.iconColor : item.Material.iconDisabledColor
-                                when: modelData.icon.color.a === 0
-                            }
-
-                            enabled: modelData.enabled
-                            visible: modelData.visible
-
-                            onClicked: {
-                                bottomSheet.close();
-                                modelData.triggered(item);
-                            }
-
-                            background.implicitWidth: grid.cellWidth
-                            background.implicitHeight: grid.cellHeight
-
-                            contentItem: QQCImpl2.IconLabel {
-                                width: grid.cellWidth
-                                height: grid.cellHeight
-
-                                spacing: item.spacing
-                                mirrored: item.mirrored
-                                display: QQCImpl2.IconLabel.TextUnderIcon
-
-                                icon: item.icon
-                                text: modelData.text
-                                font: item.font
-                                color: item.enabled ? item.Material.foreground : item.Material.hintTextColor
+                        Component {
+                            id : icondel
+                            FluidControls.Icon {
+                                source: modelData.icon.source
+                                size : cellWidth
                             }
                         }
+
+                        Component {
+                            id : itemdel
+                            QQC2.ItemDelegate {
+                                id: item
+
+                                icon.width: modelData.icon.width ? modelData.icon.width : 48
+                                icon.height: modelData.icon.height ? modelData.icon.height : 48
+                                icon.name: modelData.icon.name
+                                icon.source: modelData.icon.source
+
+                                Binding {
+                                    target: item
+                                    property: "icon.color"
+                                    value: item.enabled ? item.Material.iconColor : item.Material.iconDisabledColor
+                                    when: modelData.icon.color.a === 0
+                                }
+
+                                enabled: modelData.enabled
+                                visible: modelData.visible
+
+                                onClicked: {
+                                    bottomSheet.close();
+                                    modelData.triggered(item);
+                                }
+
+                                background.implicitWidth: grid.cellWidth
+                                background.implicitHeight: grid.cellHeight
+
+                                contentItem: QQCImpl2.IconLabel {
+                                    width: grid.cellWidth
+                                    height: grid.cellHeight
+
+                                    spacing: item.spacing
+                                    mirrored: item.mirrored
+                                    display: QQCImpl2.IconLabel.TextUnderIcon
+
+                                    icon: item.icon
+                                    text: modelData.text
+                                    font: item.font
+                                    color: item.enabled ? item.Material.foreground : item.Material.hintTextColor
+                                }
+                            }
+                        }
+
+                        delegate: itemdel
                     }
                 }
             }
