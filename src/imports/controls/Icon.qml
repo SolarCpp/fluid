@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Fluid.
  *
  * Copyright (C) 2018 Michael Spencer <sonrisesoftware@gmail.com>
@@ -177,8 +177,8 @@ Item {
         source: icon.source
 
         sourceSize {
-            width: icon.sourceSize * Screen.devicePixelRatio
-            height: icon.sourceSize * Screen.devicePixelRatio
+            width: icon.sourceSize //* Screen.devicePixelRatio
+            height: icon.sourceSize //* Screen.devicePixelRatio
         }
     }
 

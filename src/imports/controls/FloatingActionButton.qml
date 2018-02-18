@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Fluid.
  *
  * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
@@ -63,7 +63,7 @@ RoundButton {
 
         By default it is \c true if screen width is less than 460 pixels.
     */
-    property bool mini: Screen.width < 460
+    property bool mini: false //Screen.width < 460
 
     Material.elevation: 1
 
