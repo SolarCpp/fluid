@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Fluid.
  *
  * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
@@ -104,7 +104,7 @@ FluidControls.Page {
 
     appBar.elevation: 0
 
-    header: ToolBar {
+    footer: ToolBar {
         id: tabToolBar
 
         visible: tabBar.count > 0
@@ -119,11 +119,14 @@ FluidControls.Page {
 
             anchors {
                 top: centered ? undefined : parent.top
-                left: centered ? undefined : parent.left
-                right: centered ? undefined : parent.right
+                //left: centered ? undefined : parent.left
+                //right: centered ? undefined : parent.right
                 leftMargin: centered ? 0 : appBar ? appBar.leftKeyline - 12 : 0
-                horizontalCenter: centered ? parent.horizontalCenter : undefined
+
+                horizontalCenter: parent.horizontalCenter //centered ? parent.horizontalCenter : undefined
             }
+
+            position: TabBar.Footer
 
             currentIndex: swipeView.currentIndex
 
@@ -142,7 +145,7 @@ FluidControls.Page {
 
                     text: delegateData.title
 
-                    width: parent.fixed ? parent.width / parent.count : implicitWidth
+                    width: implicitWidth //parent.fixed ? parent.width / parent.count : implicitWidth
 
                     // Active color
                     Material.accent: appBar.Material.foreground
@@ -159,7 +162,7 @@ FluidControls.Page {
                             display: tabButton.display
 
                             icon: tabButton.icon
-                            text: tabButton.text
+                            //text: tabButton.text
                             font: tabButton.font
                             color: tabButton.icon.color
 
@@ -167,20 +170,20 @@ FluidControls.Page {
                             Layout.fillHeight: true
                         }
 
-                        FluidControls.ToolButton {
-                            id: tabCloseButton
+//                        FluidControls.ToolButton {
+//                            id: tabCloseButton
 
-                            icon.width: 16
-                            icon.height: 16
-                            icon.source: FluidControls.Utils.iconUrl("navigation/close")
+//                            icon.width: 16
+//                            icon.height: 16
+//                            icon.source: FluidControls.Utils.iconUrl("navigation/close")
 
-                            focus: Qt.NoFocus
-                            visible: delegateData.canRemove
+//                            focus: Qt.NoFocus
+//                            visible: delegateData.canRemove
 
-                            onClicked: page.removeTab(index)
+//                            onClicked: page.removeTab(index)
 
-                            Layout.alignment: Qt.AlignVCenter
-                        }
+//                            Layout.alignment: Qt.AlignVCenter
+//                        }
                     }
                 }
             }

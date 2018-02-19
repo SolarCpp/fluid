@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Fluid.
  *
  * Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
@@ -30,13 +30,18 @@ Item {
     /*!
         This property holds the tab icon information.
      */
-    property QtObject icon: QtObject {
+
+    QtObject {
+        id : icon
         property string name
         property url source
         property int width: 24
         property int height: 24
         property color color: "transparent"
     }
+
+    property alias icon : icon
+    property alias iconsource : icon.source
 
     /*!
        The title of this tab.
